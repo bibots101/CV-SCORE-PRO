@@ -1,1 +1,0 @@
-ADD_USER = """INSERT INTO USERS (username, email, password) VALUES (%s, %s, %s)"""
