@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/bibots101/CV-SCORE-BE.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/bibots101/CV-SCORE-FE.git
