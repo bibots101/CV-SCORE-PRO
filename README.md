@@ -1,57 +1,123 @@
-Empower your job search with CV Score Pro, where advanced technology meets career aspirations.
+**CV Analyser (CV Score Pro)**
 
-# FastAPI User Authentication
+CV Analyser is a full-stack application that scores and analyzes CVs/resumes to help match candidates with job requirements. This repository contains two primary submodules: the backend (FastAPI) and the frontend (Vite + React / TypeScript). The root repository ties the two submodules together and provides top-level guidance for development and deployment.
 
-This is a simple FastAPI application demonstrating user registration, authentication, and role-based authorization.
+**Repository**
+- **Backend**: API, ML model loading, data preparation, authentication and job application logic — located in the `backend/` folder. See [backend/README.md](backend/README.md).
+- **Frontend**: Vite + React/TypeScript web app — located in the `frontend/` folder. See [frontend/README.md](frontend/README.md).
 
-## Features
+**Submodule repositories**
+This repository is intended to include the backend and frontend as git submodules. Add them using your own remote URLs. Example:
 
-- User registration
-- Token-based authentication
-- Role-based authorization
+```bash
+git submodule add <BACKEND_REPO_URL> backend
+git submodule add <FRONTEND_REPO_URL> frontend
+git commit -m "Add backend and frontend submodules"
+```
 
-## Installation
+To clone this repository including submodules:
 
-1. Clone the repository:
+```bash
+git clone --recurse-submodules <ROOT_REPO_URL>
+# or if already cloned
+git submodule update --init --recursive
+```
 
-    ```bash
-    git clone https://github.com/bibots101/cv-analyser.git
-    ```
-2. Run the Virtual Environment
-# On Windows
-python -m venv venv
-venv\Scripts\activate
+Replace `<BACKEND_REPO_URL>`, `<FRONTEND_REPO_URL>`, and `<ROOT_REPO_URL>` with your actual repository URLs.
 
-# On macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
+Getting started (development)
+-----------------------------
 
-3. Install dependencies:
+Backend (basic)
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+1. Create and activate a Python virtual environment:
 
-## Usage
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
 
-1. Run the FastAPI application:
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-    ```bash
-    uvicorn main:app --reload
-    ```
+2. Install dependencies (from repository root or inside `backend/`):
 
-2. Open `http://localhost:8000/docs` in your browser to access the Swagger UI and test the endpoints.
+```bash
+pip install -r backend/requirments.txt
+```
 
-## Endpoints
+3. Run the API (example using Uvicorn):
 
-- `POST /register`: Register a new user.
-- `POST /token`: Get an access token by providing email and password.
-- `GET /users/me`: Get user information along with roles.
+```bash
+cd backend
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-## Contributing
+4. Open the API docs at `http://localhost:8000/docs`.
 
-Contributions are welcome! If you find any issues or want to add new features, feel free to open an issue or create a pull request.
+Frontend (basic)
 
-## License
+1. From the `frontend/` directory install node dependencies:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```bash
+cd frontend
+npm install
+# or: pnpm install | yarn
+```
+
+2. Run the dev server:
+
+```bash
+npm run dev
+# or: pnpm dev | yarn dev
+```
+
+3. Open the application in the browser (Vite will show the local URL).
+
+Environment and configuration
+-----------------------------
+- Backend: configure database credentials and secret keys via environment variables (check `backend/const.py` or similar files). Use a `.env` or your deployment secrets manager.
+- Frontend: configure API base URL in the environment (for Vite use `VITE_API_URL` in `.env` files).
+
+Project structure (top-level)
+
+- `backend/` — FastAPI app, ML model code, data preparation and SQL helpers. See [backend/README.md](backend/README.md).
+- `frontend/` — Vite + React TypeScript app. See [frontend/README.md](frontend/README.md).
+- `preparing_data/` — scripts used to process data, train and export models.
+- `cvscorepro.sql` — SQL schema or example dump used by the project.
+
+Testing
+-------
+- Backend: run Python tests from `backend/` (e.g., `pytest backend/`), and use test databases where possible.
+- Frontend: run `npm test` or the configured test runner in `frontend/`.
+
+Deployment notes
+----------------
+- Containerize the backend and frontend separately (Docker) and use a reverse proxy (NGINX) or cloud provider routing to serve the frontend and proxy API calls to the backend.
+- Use CI to run tests and build artifacts. For submodules, ensure CI checks initialize submodules (e.g., `git submodule update --init --recursive`).
+
+Contributing
+------------
+- Please open issues or pull requests against the appropriate submodule repo for changes specific to backend or frontend.
+- For cross-cutting changes (e.g., API contract changes), open an issue in this root repository and link the submodule PRs.
+
+Licensing
+---------
+This project is provided under the MIT License. See the [LICENSE](LICENSE) file.
+
+Contact
+-------
+For questions, feature requests, or help getting started, open an issue or contact the maintainers via the repository contact info.
+
+Acknowledgements
+----------------
+Built with FastAPI, Vite, React, and common ML/data-processing libraries.
+
+---
+
+If you want, I can also:
+- add the two submodule remote URLs into the repo and initialize them
+- create or update `backend/README.md` and `frontend/README.md` with tailored instructions
+Tell me which option you prefer and provide the remote URLs if you'd like me to add them.
